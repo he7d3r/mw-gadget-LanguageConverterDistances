@@ -1,24 +1,36 @@
-/*
- * Copied from [[b:en:Algorithm Implementation/Strings/Levenshtein_distance#JavaScript]]
+/**
+ * Adds a CSS class indicating the "Levenshtein distance" between the
+ * "original expression" and the "converted expression" of each rule of the
+ * dictionaries
+ * 
+ * @author: [[User:Helder.wiki]]
+ * @tracking: [[Special:GlobalUsage/User:Helder.wiki/Tools/LanguageConverter.js/LevenshteinDistance.js]] ([[File:User:Helder.wiki/Tools/LanguageConverter.js/LevenshteinDistance.js]])
  */
+/*jslint browser: true, white: true, regexp: true*/
+/*global jQuery, mediaWiki */
+( function ( mw, $ ) {
+'use strict';
+
+// Adapted from [[b:en:Algorithm Implementation/Strings/Levenshtein_distance#JavaScript]]
 function levenshtein(str1, str2) {
-	var l1 = str1.length,
+	var i, j, d,
+		l1 = str1.length,
 		l2 = str2.length;
 	if (Math.min(l1, l2) === 0) {
 		return Math.max(l1, l2);
 	}
-	var i = 0,
-		j = 0,
-		d = [];
-	for (i = 0; i <= l1; i++) {
+	i = 0;
+	j = 0;
+	d = [];
+	for (i = 0; i <= l1; i+=1) {
 		d[i] = [];
 		d[i][0] = i;
 	}
-	for (j = 0; j <= l2; j++) {
+	for (j = 0; j <= l2; j+=1) {
 		d[0][j] = j;
 	}
-	for (i = 1; i <= l1; i++) {
-		for (j = 1; j <= l2; j++) {
+	for (i = 1; i <= l1; i+=1) {
+		for (j = 1; j <= l2; j+=1) {
 			d[i][j] = Math.min(
 			d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (str1.charAt(i - 1) === str2.charAt(j - 1) ? 0 : 1));
 		}
@@ -26,11 +38,6 @@ function levenshtein(str1, str2) {
 	return d[l1][l2];
 }
 
-/*
- * This function adds a CSS class indicating the "Levenshtein distance" between
- * the "original expression" and the "converted expression" of each rule of the
- * dictionaries
- */
 function addEditDistance(e){
 	var $list = $('li'), dist,
 		css = [
@@ -49,7 +56,7 @@ function addEditDistance(e){
 	mw.util.addCSS( css );
 	$list.each(function(){
 		//Current syntax: * old word : new word //Some comment
-		match = /^\s*(\S[^:]*?)\s*:\s*([\S].*?)\s*(?:\/\/.*?)?$/.exec( $(this).text() );
+		var match = /^\s*(\S[^:]*?)\s*:\s*([\S].*?)\s*(?:\/\/.*?)?$/.exec( $(this).text() );
 		if( match && match[1] && match[2]) {
 			dist = levenshtein(match[1], match[2]);
 			if (dist > 9) {
@@ -77,3 +84,5 @@ if ( $.inArray( mw.config.get('wgPageName'),
 		'Change the background of the rules according to the edit distance between the expressions'
 	)).click( addEditDistance );
 }
+
+}( mediaWiki, jQuery ) );
