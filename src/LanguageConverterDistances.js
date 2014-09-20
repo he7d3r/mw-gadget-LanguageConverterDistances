@@ -4,7 +4,6 @@
  * dictionaries
  * 
  * @author: [[User:Helder.wiki]]
- * @tracking: [[Special:GlobalUsage/User:Helder.wiki/Tools/LanguageConverter.js/LevenshteinDistance.js]] ([[File:User:Helder.wiki/Tools/LanguageConverter.js/LevenshteinDistance.js]])
  */
 /*jslint browser: true, white: true, regexp: true*/
 /*global jQuery, mediaWiki */
