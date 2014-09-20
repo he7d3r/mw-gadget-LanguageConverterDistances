@@ -3,7 +3,8 @@
  * "original expression" and the "converted expression" of each rule of the
  * dictionaries
  * 
- * @author: [[User:Helder.wiki]]
+ * @author: Helder (https://github.com/he7d3r)
+ * @license: CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0/>
  */
 /*jslint browser: true, white: true, regexp: true*/
 /*global jQuery, mediaWiki */
